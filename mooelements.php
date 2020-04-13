@@ -3,7 +3,7 @@
 /**
  * Plugin Name: Moo Elements
  * Description: Plugin to extend Elementor forms with Moosend.
- * Version:     2.0.0
+ * Version:     2.0.2
  * Author:      José Sotelo
  * Author URI:  https://inboundlatino.com/
  * Text Domain: moo-elements
@@ -143,6 +143,12 @@ final class Moo_Elements {
         // Check for required PHP version
         if ( version_compare( PHP_VERSION, self::MINIMUM_PHP_VERSION, '<' ) ) {
             add_action( 'admin_notices', [ $this, 'admin_notice_minimum_php_version' ] );
+            return;
+        }
+        
+        // Check if Elementor Pro Exists
+        if(!function_exists( 'elementor_pro_load_plugin' )){
+            add_action( 'admin_notices', [ $this, 'admin_notice_missing_main_plugin' ] );
             return;
         }
 
